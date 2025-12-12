@@ -2,7 +2,7 @@
 
 Name:           python-%{module_name}
 Version:        0.9.14
-Release:        1
+Release:        2
 Summary:        Python parser for fastimport (VCS interchange format)
 License:        GPLv2+
 URL:            https://launchpad.net/python-fastimport
