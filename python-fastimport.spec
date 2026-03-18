@@ -1,40 +1,40 @@
-%global module_name fastimport
+%define module fastimport
+%bcond tests 1
 
-Name:           python-%{module_name}
-Version:        0.9.14
-Release:        3
-Summary:        Python parser for fastimport (VCS interchange format)
-License:        GPLv2+
-URL:            https://launchpad.net/python-fastimport
-Source0:        https://files.pythonhosted.org/packages/source/f/%{module_name}/%{module_name}-%{version}.tar.gz
+Name:		python-fastimport
+Version:	0.9.16
+Release:	1
+Summary:	Python parser for fastimport (VCS interchange format)
+License:	GPL-2.0-or-later
+Group:		Development/Python
+URL:		https://github.com/jelmer/python-fastimport
+Source0:	%{URL}/archive/v%{version}/%{name}-%{version}.tar.gz
+BuildSystem:	python
 BuildArch:      noarch
-BuildRequires:  python-devel
-BuildRequires:  python-setuptools
-BuildRequires:  python-nose
+BuildRequires:	pkgconfig(python)
+BuildRequires:	python%{pyver}dist(pip)
+BuildRequires:	python%{pyver}dist(setuptools)
+BuildRequires:	python%{pyver}dist(wheel)
 
 %description
 This is the Python parser that was originally developed for bzr-fastimport, but 
 extracted so it can be used by other projects.
 
-%prep
-%setup -q -n %{module_name}-%{version}
+%prep -a
 # Fix shebangs
 sed -i -e 's@^#!/usr/bin/python@#!%{__python3}@' bin/*
 
-%build
-%{py_build}
-
-%install
-%{py_install}
-
+%if %{with tests}
 %check
-PYTHONPATH=$RPM_BUILD_ROOT%{python3_sitelib} %{_bindir}/nosetests-3 %{module_name}
+PYTHONPATH=%{buildroot}%{python3_sitelib} %{__python} -m unittest
+%endif
 
 %files
+%doc AUTHORS README.md
 %license COPYING
-%doc AUTHORS NEWS README.md
-%{python_sitelib}/%{module_name}*
 %{_bindir}/fast-import-filter
 %{_bindir}/fast-import-info
 %{_bindir}/fast-import-query
+%{python_sitelib}/%{module}
+%{python_sitelib}/%{module}-%{version}.dist-info
 
