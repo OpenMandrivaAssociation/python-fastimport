@@ -3,7 +3,7 @@
 
 Name:		python-fastimport
 Version:	0.9.16
-Release:	1
+Release:	2
 Summary:	Python parser for fastimport (VCS interchange format)
 License:	GPL-2.0-or-later
 Group:		Development/Python
